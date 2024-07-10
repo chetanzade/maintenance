@@ -1,4 +1,4 @@
 # maintenance
 
-> [!TIP] ### All Tips
+> [!TIP] 
 > This is tip trial
