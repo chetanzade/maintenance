@@ -22,6 +22,8 @@ jobs:
       # Step 2: Create a backup tag
       - name: Create a backup tag
         run: |
+          git config --global user.email "chetan.zade05@gmail.com"
+          git config --global user.name "Chetan Zade"
           git fetch --all
           git checkout ${{ inputs.branch_name }}
           TAG_NAME="backup-${{ inputs.branch_name }}-$(date +'%d%b%Y')"
