@@ -33,6 +33,7 @@ jobs:
       # Step 3: Delete the branch locally and remotely
       - name: Delete branch locally and remotely
         run: |
+          git checkout release
           git branch -d ${{ inputs.branch_name }}
           git push origin --delete ${{ inputs.branch_name }}
 
