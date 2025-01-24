@@ -1,0 +1,43 @@
+name: Manage Branch Backup and Recreation
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: "The name of the branch to back up, delete, and recreate"
+        required: true
+        type: choice
+        options:
+          - testing1
+          - testing2
+
+jobs:
+  backup_and_recreate:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Create a backup tag
+      - name: Create a backup tag
+        run: |
+          git fetch --all
+          git checkout ${{ inputs.branch_name }}
+          TAG_NAME="backup-${{ inputs.branch_name }}-$(date +'%d%b%Y')"
+          git tag -a "$TAG_NAME" -m "Backup of ${{ inputs.branch_name }} before deletion on $(date +'%d%b%Y')"
+          git push origin "$TAG_NAME"
+
+      # Step 3: Delete the branch locally and remotely
+      - name: Delete branch locally and remotely
+        run: |
+          git branch -d ${{ inputs.branch_name }}
+          git push origin --delete ${{ inputs.branch_name }}
+
+      # Step 4: Create a new branch from the release branch
+      - name: Create a new branch from the release branch
+        run: |
+          git checkout release
+          git pull origin release
+          git checkout -b ${{ inputs.branch_name }}
+          git push origin ${{ inputs.branch_name }}
