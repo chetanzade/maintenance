@@ -19,13 +19,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Create a backup tag
-      - name: Create a backup tag
+      - name: Fetch and checkout the branch
         run: |
           git config --global user.email "chetan.zade05@gmail.com"
           git config --global user.name "Chetan Zade"
           git fetch --all
-          git checkout ${{ inputs.branch_name }}
+          git fetch origin ${{ inputs.branch_name }}
+          git checkout -t origin/${{ inputs.branch_name }}
+
+      # Step 2: Create a backup tag
+      - name: Create a backup tag
+        run: |
           TAG_NAME="backup-${{ inputs.branch_name }}-$(date +'%d%b%Y')"
           git tag -a "$TAG_NAME" -m "Backup of ${{ inputs.branch_name }} before deletion on $(date +'%d%b%Y')"
           git push origin "$TAG_NAME"
