@@ -11,6 +11,14 @@ on:
           - testing1
           - testing2
 
+      enable_backup:
+        description: "Flag to enable or disable the backup step"
+        required: true
+        type: choice  
+        options:
+          - false
+          - true
+
 jobs:
   backup_and_recreate:
     runs-on: ubuntu-latest
