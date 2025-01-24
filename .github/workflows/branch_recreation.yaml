@@ -44,7 +44,7 @@ jobs:
       # Step 4: Create a new branch from the release branch
       - name: Create a new branch from the release branch
         run: |
-          git checkout release
-          git pull origin release
+          git checkout -t origin/release
+          git pull origin origin/release
           git checkout -b ${{ inputs.branch_name }}
           git push origin ${{ inputs.branch_name }}
