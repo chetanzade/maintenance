@@ -37,14 +37,14 @@ jobs:
       # Step 3: Delete the branch locally and remotely
       - name: Delete branch locally and remotely
         run: |
-          git checkout release
+          git checkout master
           git branch -d ${{ inputs.branch_name }}
           git push origin --delete ${{ inputs.branch_name }}
 
       # Step 4: Create a new branch from the release branch
-      - name: Create a new branch from the release branch
+      - name: Create a new branch from the master branch
         run: |
-          git checkout -t origin/release
-          git pull origin origin/release
+          git checkout -t origin/master
+          git pull origin master
           git checkout -b ${{ inputs.branch_name }}
           git push origin ${{ inputs.branch_name }}
