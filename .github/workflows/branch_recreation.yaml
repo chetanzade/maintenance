@@ -25,7 +25,7 @@ jobs:
           git config --global user.name "Chetan Zade"
           git fetch --all
           git fetch origin ${{ inputs.branch_name }}
-          git checkout -t origin/${{ inputs.branch_name }}
+          git checkout ${{ inputs.branch_name }}
 
       # Step 2: Create a backup tag
       - name: Create a backup tag
@@ -44,7 +44,7 @@ jobs:
       # Step 4: Create a new branch from the release branch
       - name: Create a new branch from the master branch
         run: |
-          git checkout -t origin/master
+          git checkout master
           git pull origin master
           git checkout -b ${{ inputs.branch_name }}
           git push origin ${{ inputs.branch_name }}
